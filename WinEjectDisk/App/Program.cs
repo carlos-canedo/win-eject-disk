@@ -1,9 +1,8 @@
-using System.Diagnostics;
-
 namespace WinEjectDisk.App;
 
 static class Program
 {
+    // FIXME: refactor constants
     static string LOG_FILE_NAME = "log.txt";
     /// <summary>
     ///  The main entry point for the application.
@@ -17,6 +16,7 @@ static class Program
 
         try
         {
+            // FIXME: refactor this logs
             File.Delete(LOG_FILE_NAME);
             File.AppendAllText(LOG_FILE_NAME, "started\n");
 

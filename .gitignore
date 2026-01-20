@@ -482,3 +482,7 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# FIXME: move this file to temp folder or something
+# Logs file
+log.txt
