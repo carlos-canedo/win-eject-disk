@@ -1,12 +1,10 @@
 using System.Diagnostics;
-using System.Text.Json;
-using WinEjectDisk.App;
+using WinEjectDisk.App.Constants;
 using WinEjectDisk.App.Services;
 
 internal sealed class TrayHost : IDisposable
 {
     // FIXME: refactor constants
-    private readonly string TRAY_ICON_PATH = "TrayIcon.ico";
     private readonly NotifyIcon _tray;
     private readonly ContextMenuStrip _menu;
 
@@ -59,7 +57,7 @@ internal sealed class TrayHost : IDisposable
 
     private NotifyIcon CreateTrayIcon()
     {
-        string iconPath = Path.Combine(AppContext.BaseDirectory, TRAY_ICON_PATH);
+        string iconPath = Path.Combine(AppContext.BaseDirectory, Config.TrayIconPath);
 
         var trayIcon = new NotifyIcon
         {

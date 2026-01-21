@@ -10,7 +10,7 @@ namespace WinEjectDisk.App.Services
         Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             Config.AppName,
-            Config.LogFileName
+            Config.LogFilePath
         );
 
     public static void Log(string message)

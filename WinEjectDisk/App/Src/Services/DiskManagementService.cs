@@ -24,11 +24,11 @@ namespace WinEjectDisk.App.Services
 
       using var process = Process.Start(psi)!;
       var json = process.StandardOutput.ReadToEnd();
-      var disksPs = JsonSerializer.Deserialize<List<Disk>>(json);
+      var disks = JsonSerializer.Deserialize<List<Disk>>(json);
 
       process.WaitForExit();
 
-      return disksPs!;
+      return disks!;
     }
 
     public static void SetIsOffline(int diskNumber, bool isOffline)
@@ -54,8 +54,9 @@ namespace WinEjectDisk.App.Services
       process.WaitForExit();
     }
 
-    public static void GetDiskByNumber(int diskNumber)
+    public static Disk GetDiskByNumber(int diskNumber)
     {
+      return GetDisks().First((disk) => disk.Number == diskNumber);
     }
   }
 }
