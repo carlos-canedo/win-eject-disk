@@ -32,8 +32,16 @@ public class Disk : IEquatable<Disk>
     }
 
     public override bool Equals(object? obj)
-      => Equals(obj as Disk);
+    {
+        return Equals(obj as Disk);
+    }
 
     public override int GetHashCode()
-      => (UniqueId ?? Size.ToString()).GetHashCode();
+    {
+        var key = !string.IsNullOrEmpty(UniqueId)
+            ? UniqueId
+            : Size.ToString();
+
+        return key.GetHashCode();
+    }
 }
