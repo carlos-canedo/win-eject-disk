@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text.Json;
 using WinEjectDisk.App;
+using WinEjectDisk.App.Services;
 
 internal sealed class TrayHost : IDisposable
 {
@@ -23,7 +24,7 @@ internal sealed class TrayHost : IDisposable
 
     private void AddDiskToMenu(ContextMenuStrip menu)
     {
-        var disks = GetPsDisks();
+        var disks = DiskManagementService.GetDisks();
 
         var validBusTypes = new[] { "USB", "SD" };
         var externalDisks = disks.Where(d =>
@@ -39,7 +40,7 @@ internal sealed class TrayHost : IDisposable
             {
                 item.DropDownItems.Add("Enable", null, (_, _) =>
                 {
-                    SetIsOffline(disk.Number, false);
+                    DiskManagementService.SetIsOffline(disk.Number, false);
                     Debug.WriteLine("Enable");
                 });
             }
@@ -47,7 +48,7 @@ internal sealed class TrayHost : IDisposable
             {
                 item.DropDownItems.Add("Disable", null, (_, _) =>
                 {
-                    SetIsOffline(disk.Number, true);
+                    DiskManagementService.SetIsOffline(disk.Number, true);
                     Debug.WriteLine("Disable");
                 });
             }
@@ -70,46 +71,6 @@ internal sealed class TrayHost : IDisposable
         };
 
         return trayIcon;
-    }
-
-    private void SetIsOffline(int diskNumber, bool isOffline)
-    {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "powershell",
-            Arguments = $"-Command \"Set-Disk -Number {diskNumber} -IsOffline ${isOffline.ToString().ToLower()}\"",
-            Verb = "runas", //FIXME: admin rights
-            UseShellExecute = false,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            CreateNoWindow = true,
-            WindowStyle = ProcessWindowStyle.Hidden
-        };
-
-        using var process = Process.Start(psi)!;
-        process.WaitForExit();
-    }
-
-    private List<PsDisk> GetPsDisks()
-    {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "powershell",
-            Arguments = "-Command \"Get-Disk | ConvertTo-Json -Depth 3\"",
-            UseShellExecute = false,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            CreateNoWindow = true,
-            WindowStyle = ProcessWindowStyle.Hidden
-        };
-
-        using var process = Process.Start(psi)!;
-        var json = process.StandardOutput.ReadToEnd();
-        var disksPs = JsonSerializer.Deserialize<List<PsDisk>>(json);
-
-        process.WaitForExit();
-
-        return disksPs!;
     }
 
     private void OnExit(object? sender, EventArgs e)

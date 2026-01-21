@@ -1,7 +1,6 @@
-namespace WinEjectDisk.App
+namespace WinEjectDisk.App.Domain
 {
-
-  public class PsDisk
+  public class Disk
   {
     public int Number { get; set; }
     public long Size { get; set; }
