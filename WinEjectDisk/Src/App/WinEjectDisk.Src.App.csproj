@@ -13,10 +13,15 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup> -->
 
+  <!-- FIXME: This include should include an assets folder -->
   <ItemGroup>
     <Content Include="TrayIcon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\WinEjectDisk.Src.Core.csproj" />
   </ItemGroup>
 
 </Project>

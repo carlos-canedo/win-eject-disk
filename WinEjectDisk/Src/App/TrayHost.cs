@@ -1,7 +1,9 @@
 using System.Diagnostics;
-using WinEjectDisk.App.Constants;
-using WinEjectDisk.App.Extensions;
-using WinEjectDisk.App.Services;
+using WinEjectDisk.Src.Core.Constants;
+using WinEjectDisk.Src.Core.Extensions;
+using WinEjectDisk.Src.Core.Services;
+
+namespace WinEjectDisk.Src.App;
 
 internal sealed class TrayHost : IDisposable
 {

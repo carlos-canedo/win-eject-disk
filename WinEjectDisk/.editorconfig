@@ -1,0 +1,4 @@
+[*.cs]
+indent_size = 4
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true

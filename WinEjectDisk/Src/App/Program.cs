@@ -1,6 +1,6 @@
-using WinEjectDisk.App.Services;
+using WinEjectDisk.Src.Core.Services;
 
-namespace WinEjectDisk.App;
+namespace WinEjectDisk.Src.App;
 
 static class Program
 {

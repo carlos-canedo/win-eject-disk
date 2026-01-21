@@ -1,7 +1,7 @@
-namespace WinEjectDisk.App.Domain
+namespace WinEjectDisk.Src.Core.Domain.Entities;
+
+public class Disk : IEquatable<Disk>
 {
-  public class Disk : IEquatable<Disk>
-  {
     public int Number { get; set; }
     public string UniqueId { get; set; } = string.Empty;
     public long Size { get; set; }
@@ -14,21 +14,21 @@ namespace WinEjectDisk.App.Domain
     // Computed props
     public string FriendlySize
     {
-      get => $"{Size / (1024d * 1024 * 1024):0.##} GB";
+        get => $"{Size / (1024d * 1024 * 1024):0.##} GB";
     }
 
     // Equatable methods
     public bool Equals(Disk? right)
     {
-      if (right is null || Number != right.Number)
-        return false;
+        if (right is null || Number != right.Number)
+            return false;
 
-      if (!string.IsNullOrEmpty(UniqueId) && !string.IsNullOrEmpty(right.UniqueId))
-      {
-        return UniqueId == right.UniqueId;
-      }
+        if (!string.IsNullOrEmpty(UniqueId) && !string.IsNullOrEmpty(right.UniqueId))
+        {
+            return UniqueId == right.UniqueId;
+        }
 
-      return Size == right.Size;
+        return Size == right.Size;
     }
 
     public override bool Equals(object? obj)
@@ -36,5 +36,4 @@ namespace WinEjectDisk.App.Domain
 
     public override int GetHashCode()
       => (UniqueId ?? Size.ToString()).GetHashCode();
-  }
 }
