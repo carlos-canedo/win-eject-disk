@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using WinEjectDisk.App.Constants;
+using WinEjectDisk.App.Extensions;
 using WinEjectDisk.App.Services;
 
 internal sealed class TrayHost : IDisposable
@@ -22,14 +23,8 @@ internal sealed class TrayHost : IDisposable
 
     private void AddDiskToMenu(ContextMenuStrip menu)
     {
-        var disks = DiskManagementService.GetDisks();
-
-        var validBusTypes = new[] { "USB", "SD" };
-        var externalDisks = disks.Where(d =>
-            !d.IsBoot &&
-            !d.IsSystem &&
-            validBusTypes.Contains(d.BusType)
-        );
+        var externalDisks = DiskManagementService.GetDisks()
+            .Where(d => d.IsExternal());
 
         foreach (var disk in externalDisks)
         {

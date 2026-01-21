@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinEjectDisk.App", "App\WinEjectDisk.App.csproj", "{2621BD5C-DF8A-49DB-B5C9-6947A7BF16DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinEjectDisk.Tests", "Tests\WinEjectDisk.Tests.csproj", "{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,5 +32,17 @@ Global
 		{2621BD5C-DF8A-49DB-B5C9-6947A7BF16DE}.Release|x64.Build.0 = Release|Any CPU
 		{2621BD5C-DF8A-49DB-B5C9-6947A7BF16DE}.Release|x86.ActiveCfg = Release|Any CPU
 		{2621BD5C-DF8A-49DB-B5C9-6947A7BF16DE}.Release|x86.Build.0 = Release|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Debug|x64.Build.0 = Debug|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Debug|x86.Build.0 = Debug|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Release|x64.ActiveCfg = Release|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Release|x64.Build.0 = Release|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Release|x86.ActiveCfg = Release|Any CPU
+		{7B71FAD5-5FEF-4CF8-9135-4FCB502F32EF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
