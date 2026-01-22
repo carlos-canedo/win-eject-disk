@@ -1,4 +1,4 @@
-using WinEjectDisk.Src.Core.Domain.Commands;
+using WinEjectDisk.Src.Core.Domain.Commands.Disk;
 
 namespace WinEjectDisk.Src.Core.Domain.Dtos;
 

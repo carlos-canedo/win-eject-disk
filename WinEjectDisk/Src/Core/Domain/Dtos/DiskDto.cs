@@ -4,6 +4,6 @@ public sealed class DiskDto
 {
     public int Number { get; init; }
     public int HashCode { get; init; }
-    public string Label { get; init; } = string.Empty;
+    public string Name { get; init; } = string.Empty;
     public IReadOnlyList<DiskActionDto> Actions { get; init; } = [];
 }

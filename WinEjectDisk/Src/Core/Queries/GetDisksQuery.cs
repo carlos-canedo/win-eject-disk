@@ -1,32 +1,17 @@
+using DomainDisk = WinEjectDisk.Src.Core.Domain.Entities.Disk;
 using WinEjectDisk.Src.Core.Domain.Dtos;
-using WinEjectDisk.Src.Core.Domain.Entities;
+using WinEjectDisk.Src.Core.Services;
+using WinEjectDisk.Src.Core.Domain.Commands.Disk;
 using WinEjectDisk.Src.Core.Extensions;
+using WinEjectDisk.Src.Core.Domain.Queries;
 
-namespace WinEjectDisk.Src.Core.Services;
+namespace WinEjectDisk.Src.Core.Commands.Disks;
 
-// FIXME: move this
-public sealed class DisksState
+public sealed class GetDisksQuery : IGetDisksQuery
 {
-    public IReadOnlyList<DiskDto> Disks { get; init; } = [];
-    public DateTime LastUpdated { get; init; }
-}
-
-public sealed class DisksStateService
-{
-    public DisksState Current { get; private set; } = new();
-    public event EventHandler<DisksState>? StateChanged;
-
-    public void RefreshDisks()
+    public IReadOnlyList<DiskDto> Execute()
     {
-        var disks = GetDisks();
-
-        Current = new DisksState
-        {
-            Disks = disks,
-            LastUpdated = DateTime.UtcNow
-        };
-
-        StateChanged?.Invoke(this, Current);
+        return GetDisks();
     }
 
     private List<DiskDto> GetDisks()
@@ -37,12 +22,11 @@ public sealed class DisksStateService
             {
                 string label = $"{disk.FriendlyName} ({disk.FriendlySize})";
 
-
                 return new DiskDto()
                 {
                     Number = disk.Number,
                     HashCode = disk.GetHashCode(),
-                    Label = label,
+                    Name = label,
                     Actions = GetListActions(disk),
                 };
             })
@@ -51,16 +35,17 @@ public sealed class DisksStateService
         return disks;
     }
 
-    private List<DiskActionDto> GetListActions(Disk disk)
+    private List<DiskActionDto> GetListActions(DomainDisk disk)
     {
         var actions = new List<DiskActionDto>();
 
         if (disk.IsOffline)
         {
+            // FIXME: refactor constants and every palce with quotes ""
             actions.Add(new()
             {
                 Label = "Enable",
-                Action = DiskCommand.SetOnline,
+                Command = DiskCommand.SetOnline,
             });
         }
 
@@ -69,7 +54,7 @@ public sealed class DisksStateService
             actions.Add(new()
             {
                 Label = "Disable",
-                Action = DiskCommand.SetOffline,
+                Command = DiskCommand.SetOffline,
             });
         }
 

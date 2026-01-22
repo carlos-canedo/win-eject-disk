@@ -4,11 +4,11 @@ namespace WinEjectDisk.Src.Core.Commands.Disk;
 
 public sealed class DiskCommandDispatcher
 {
-    private readonly Dictionary<DiskCommand, IDiskCommand> _consumers;
+    private readonly Dictionary<DiskCommand, IDiskConsumer> _consumers;
 
-    public DiskCommandDispatcher(IEnumerable<IDiskCommand> commands)
+    public DiskCommandDispatcher(IEnumerable<IDiskConsumer> consumers)
     {
-        _consumers = commands.ToDictionary(c => c.Command);
+        _consumers = consumers.ToDictionary(c => c.Command);
     }
 
     public void Dispatch(int diskNumber, int diskHashCode, DiskCommand command)
