@@ -11,6 +11,4 @@ public static class DiskExtensions
           !disk.IsSystem &&
           Config.ExternalBusTypes.Contains(disk.BusType);
     }
-
-    // FIXME: Add extension for disks to check if the disk number is still the same or maybe with the equal part in the Disk class it already works
 }

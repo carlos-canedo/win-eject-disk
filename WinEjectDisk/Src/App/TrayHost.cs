@@ -8,13 +8,13 @@ namespace WinEjectDisk.Src.App;
 internal sealed class TrayHost : IDisposable
 {
     // FIXME: refactor constants
-    private readonly AppStateService _state;
+    private readonly DisksStateService _state;
     private readonly NotifyIcon _icon;
     private ContextMenuStrip? _menu;
 
     public TrayHost()
     {
-        _state = new AppStateService();
+        _state = new DisksStateService();
         _icon = CreateTrayIcon();
 
         _state.StateChanged += OnStateChanged;
@@ -56,11 +56,11 @@ internal sealed class TrayHost : IDisposable
 
         if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
         {
-            _ = _state.RefreshAsync();
+            _state.RefreshDisks();
         }
     }
 
-    private void OnStateChanged(object? sender, TrayState state)
+    private void OnStateChanged(object? sender, DisksState state)
     {
         RebuildMenu(state);
     }
@@ -93,7 +93,7 @@ internal sealed class TrayHost : IDisposable
         return item;
     }
 
-    private void RebuildMenu(TrayState state)
+    private void RebuildMenu(DisksState state)
     {
         _menu = new ContextMenuStrip();
 
@@ -101,6 +101,9 @@ internal sealed class TrayHost : IDisposable
         {
             _menu.Items.Add(GetDiskMenuItem(disk));
         }
+
+        _menu.Items.Add(new ToolStripSeparator());
+        _menu.Items.Add("Refresh", null, OnExit);
 
         _menu.Items.Add(new ToolStripSeparator());
         _menu.Items.Add("Exit", null, OnExit);
