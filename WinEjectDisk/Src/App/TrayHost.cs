@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using WinEjectDisk.Src.Core.Constants;
-using WinEjectDisk.Src.Core.Extensions;
+using WinEjectDisk.Src.Core.Domain.Entities;
 using WinEjectDisk.Src.Core.Services;
 
 namespace WinEjectDisk.Src.App;
@@ -8,48 +8,17 @@ namespace WinEjectDisk.Src.App;
 internal sealed class TrayHost : IDisposable
 {
     // FIXME: refactor constants
-    private readonly NotifyIcon _tray;
-    private readonly ContextMenuStrip _menu;
+    private readonly AppStateService _state;
+    private readonly NotifyIcon _icon;
+    private ContextMenuStrip? _menu;
 
     public TrayHost()
     {
-        _menu = new ContextMenuStrip();
+        _state = new AppStateService();
+        _icon = CreateTrayIcon();
 
-        AddDiskToMenu(_menu);
-
-        _menu.Items.Add(new ToolStripSeparator());
-        _menu.Items.Add("Exit", null, OnExit);
-
-        _tray = CreateTrayIcon();
-    }
-
-    private void AddDiskToMenu(ContextMenuStrip menu)
-    {
-        var externalDisks = DiskManagementService.GetDisks()
-            .Where(d => d.IsExternal());
-
-        foreach (var disk in externalDisks)
-        {
-            var item = new ToolStripMenuItem(disk.FriendlyName);
-            if (disk.IsOffline)
-            {
-                item.DropDownItems.Add("Enable", null, (_, _) =>
-                {
-                    DiskManagementService.SetIsOffline(disk.Number, false);
-                    Debug.WriteLine("Enable");
-                });
-            }
-            else
-            {
-                item.DropDownItems.Add("Disable", null, (_, _) =>
-                {
-                    DiskManagementService.SetIsOffline(disk.Number, true);
-                    Debug.WriteLine("Disable");
-                });
-            }
-
-            menu.Items.Add(item);
-        }
+        _state.StateChanged += OnStateChanged;
+        _icon.MouseClick += OnIconClicked;
     }
 
     private NotifyIcon CreateTrayIcon()
@@ -76,8 +45,66 @@ internal sealed class TrayHost : IDisposable
 
     public void Dispose()
     {
-        _tray.Visible = false;
-        _tray.Dispose();
-        _menu.Dispose();
+        _icon.Visible = false;
+        _icon.Dispose();
+        _menu?.Dispose();
+    }
+
+    private void OnIconClicked(object? sender, MouseEventArgs e)
+    {
+        Logger.Log(e.Button.ToString());
+
+        if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
+        {
+            _ = _state.RefreshAsync();
+        }
+    }
+
+    private void OnStateChanged(object? sender, TrayState state)
+    {
+        RebuildMenu(state);
+    }
+
+    private ToolStripMenuItem GetDiskMenuItem(Disk disk)
+    {
+        string itemText = $"{disk.FriendlyName} ({disk.FriendlySize})";
+        var item = new ToolStripMenuItem(itemText);
+
+        Logger.Log($"${itemText} - ${disk.DriveType}");
+
+        if (disk.IsOffline)
+        {
+            // FIXME: these events should be handled in the app state service
+            item.DropDownItems.Add("Enable", null, (_, _) =>
+            {
+                Debug.WriteLine("Enable");
+                DiskManagementService.SetIsOffline(disk.Number, false);
+            });
+
+            return item;
+        }
+
+        item.DropDownItems.Add("Disable", null, (_, _) =>
+        {
+            Debug.WriteLine("Disable");
+            DiskManagementService.SetIsOffline(disk.Number, true);
+        });
+
+        return item;
+    }
+
+    private void RebuildMenu(TrayState state)
+    {
+        _menu = new ContextMenuStrip();
+
+        foreach (var disk in state.Disks)
+        {
+            _menu.Items.Add(GetDiskMenuItem(disk));
+        }
+
+        _menu.Items.Add(new ToolStripSeparator());
+        _menu.Items.Add("Exit", null, OnExit);
+
+        _icon.ContextMenuStrip = _menu;
     }
 }

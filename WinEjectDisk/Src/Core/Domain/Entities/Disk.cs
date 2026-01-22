@@ -10,6 +10,7 @@ public class Disk : IEquatable<Disk>
     public bool IsOffline { get; set; }
     public bool IsSystem { get; set; }
     public bool IsBoot { get; set; }
+    public DriveType DriveType { get; set; }
 
     // Computed props
     public string FriendlySize
