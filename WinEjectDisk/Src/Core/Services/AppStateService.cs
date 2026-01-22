@@ -1,4 +1,3 @@
-using System.Reflection.Emit;
 using WinEjectDisk.Src.Core.Domain.Dtos;
 using WinEjectDisk.Src.Core.Domain.Entities;
 using WinEjectDisk.Src.Core.Extensions;
@@ -61,7 +60,7 @@ public sealed class DisksStateService
             actions.Add(new()
             {
                 Label = "Enable",
-                Action = DiskAction.SetOnline,
+                Action = DiskCommand.SetOnline,
             });
         }
 
@@ -70,7 +69,7 @@ public sealed class DisksStateService
             actions.Add(new()
             {
                 Label = "Disable",
-                Action = DiskAction.SetOffline,
+                Action = DiskCommand.SetOffline,
             });
         }
 

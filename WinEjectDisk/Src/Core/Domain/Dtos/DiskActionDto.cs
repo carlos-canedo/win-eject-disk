@@ -1,9 +1,9 @@
-using WinEjectDisk.Src.Core.Domain.Entities;
+using WinEjectDisk.Src.Core.Domain.Commands;
 
 namespace WinEjectDisk.Src.Core.Domain.Dtos;
 
 public sealed class DiskActionDto
 {
     public string Label { get; init; } = string.Empty;
-    public DiskAction Action { get; init; }
+    public DiskCommand Command { get; init; }
 }
