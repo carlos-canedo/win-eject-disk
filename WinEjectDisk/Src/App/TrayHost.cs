@@ -17,7 +17,7 @@ internal sealed class TrayHost : IDisposable
 
     public TrayHost()
     {
-        // FIXME: use dependency injection
+        // FIXME: use dependency injection packages are already installed
         var consumers = new IDiskConsumer[]
         {
             new SetOnlineConsumer(),
@@ -109,3 +109,6 @@ internal sealed class TrayHost : IDisposable
         _icon.ContextMenuStrip = _menu;
     }
 }
+
+// FIXME: clean up the project
+// FIXME: add error handling - add success and error notifications - should be interesting to add custom errors

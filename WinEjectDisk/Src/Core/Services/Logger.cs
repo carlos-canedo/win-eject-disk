@@ -2,6 +2,7 @@ using WinEjectDisk.Src.Core.Constants;
 
 namespace WinEjectDisk.Src.Core.Services;
 
+// FIXME: use microsoft.logging instead
 public static class Logger
 {
     private static readonly object _lock = new();
