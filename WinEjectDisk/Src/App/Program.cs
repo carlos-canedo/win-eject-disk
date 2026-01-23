@@ -16,7 +16,7 @@ static class Program
         {
             ApplicationConfiguration.Initialize();
 
-            using var tray = new TrayHost();
+            using var tray = new TrayController().BuildTray();
             Application.Run(new ApplicationContext());
         }
         catch (Exception exception)
