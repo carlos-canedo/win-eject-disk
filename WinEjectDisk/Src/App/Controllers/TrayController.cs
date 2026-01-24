@@ -46,9 +46,20 @@ internal sealed class TrayController : ITrayController, IDisposable
         {
             // FIXME: Refactor constants
             Icon = new Icon(iconStream),
-            Text = "Eject External Disks",
+            Text = "Disable External Disks",
             ContextMenuStrip = _menu,
             Visible = true
+        };
+
+        // Open menu on left click
+        trayIcon.MouseClick += (sender, e) =>
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                MethodInfo method = typeof(NotifyIcon).GetMethod("ShowContextMenu",
+                    BindingFlags.Instance | BindingFlags.NonPublic)!;
+                method.Invoke(trayIcon, null);
+            }
         };
 
         return trayIcon;
@@ -81,6 +92,5 @@ internal sealed class TrayController : ITrayController, IDisposable
     }
 }
 
-// FIXME: 
 // FIXME: clean up the project
 // FIXME: add error handling - add success and error notifications - should be interesting to add custom errors

@@ -43,7 +43,7 @@ public sealed class DiskActionController : IDiskActionController
 
             _dispatcher.Dispatch(
                 diskNumber: disk.Number,
-                diskHashCode: disk.GetHashCode(),
+                diskHashCode: disk.HashCode,
                 command: command
             );
 

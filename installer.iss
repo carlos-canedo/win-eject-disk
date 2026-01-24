@@ -38,6 +38,11 @@ Filename: "schtasks"; \
   Parameters: "/Create /TN ""{#APP_NAME}Task"" /TR ""'{app}\{#EXE_NAME}'"" /SC ONLOGON /RL HIGHEST /f"; \
   Flags: runhidden
 
+; Run the task
+Filename: "schtasks"; \
+  Parameters: "/Run /TN ""{#APP_NAME}Task"""; \
+  Flags: runhidden
+
 [UninstallRun]
 ; Deletes the task when the app is uninstalled
 Filename: "schtasks"; \
