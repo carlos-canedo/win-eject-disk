@@ -8,16 +8,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <!-- // FIXME: Enable for prod -->
-  <!-- <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup> -->
+  <PropertyGroup>
+    <ApplicationIcon>Assets\TrayIcon.ico</ApplicationIcon>
+  </PropertyGroup>
 
-  <!-- FIXME: This include should include an assets folder -->
+  <!-- Release config -->
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <Optimize>true</Optimize>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Content Include="TrayIcon.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="Assets\TrayIcon.ico" />
   </ItemGroup>
 
   <ItemGroup>

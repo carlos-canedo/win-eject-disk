@@ -1,6 +1,6 @@
+using System.Reflection;
 using WinEjectDisk.Src.App.Contracts;
 using WinEjectDisk.Src.App.Controllers;
-using WinEjectDisk.Src.Core.Constants;
 
 namespace WinEjectDisk.Src.App;
 
@@ -32,12 +32,20 @@ internal sealed class TrayController : ITrayController, IDisposable
 
     private NotifyIcon CreateTrayIcon()
     {
-        string iconPath = Path.Combine(AppContext.BaseDirectory, Config.TrayIconPath);
+        // FIXME: move this to a config file in the app module
+        string resourcePath = "WinEjectDisk.Src.App.Assets.TrayIcon.ico";
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        using Stream? iconStream = assembly.GetManifestResourceStream(resourcePath);
+
+        if (iconStream == null)
+        {
+            throw new Exception($"Could not find resource at {resourcePath}");
+        }
 
         var trayIcon = new NotifyIcon
         {
             // FIXME: Refactor constants
-            Icon = new Icon(iconPath),
+            Icon = new Icon(iconStream),
             Text = "Eject External Disks",
             ContextMenuStrip = _menu,
             Visible = true
@@ -62,7 +70,12 @@ internal sealed class TrayController : ITrayController, IDisposable
 
     public void Dispose()
     {
-        _icon?.Dispose();
+        if (_icon != null)
+        {
+            _icon.Visible = false;
+            _icon.Dispose();
+        }
+
         _menu?.Dispose();
         Application.Exit();
     }
