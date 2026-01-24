@@ -8,7 +8,6 @@ public static class DiskManagementService
 {
     private const string _getDisksCommand = "-Command \"ConvertTo-Json -Depth 1 -InputObject @(Get-Disk)\"";
     private const string _setIsOfflineCommand = "-Command \"Set-Disk -Number {0} -IsOffline ${1}\"";
-    private const string _notSupportedErrorKeyword = "Set-Disk : Not Supported";
 
     public static List<Disk> GetDisks()
     {
@@ -72,6 +71,18 @@ public static class DiskManagementService
             string errorMessage = stderr.Contains(_notSupportedErrorKeyword)
                 ? "Disk doesn't support offline"
                 : "Disk offline status failed for an unknown issue";
+
+            // FIXME: This should be something like this
+            // public void HandlePowerShellError(string errorPayload, string diskId)
+            // {
+            //     // Check each specific case. The first one to return a non-null wins.
+            //     var ex = (DiskException?)DiskNotFoundException.FromPayload(errorPayload, diskId)
+            //         ?? (DiskException?)DiskNotSupportedException.FromPayload(errorPayload)
+            //         ?? (DiskException?)DiskMismatchException.FromPayload(errorPayload)
+            //         ?? new DiskException(errorPayload); // Fallback to base if nothing matches
+
+            //     throw ex;
+            // }
 
             Logger.Log(errorMessage);
             throw new Exception(errorMessage);
