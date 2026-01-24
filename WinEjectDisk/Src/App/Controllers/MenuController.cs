@@ -28,7 +28,10 @@ public sealed class MenuController : IMenuController
         }
 
         // Global actions
-        menu.Items.Add(new ToolStripSeparator());
+        if (disks.Count() > 0)
+        {
+            menu.Items.Add(new ToolStripSeparator());
+        }
 
         menu.Items.Add(GetRefreshMenuItem());
         menu.Items.Add(GetExitMenuItem());

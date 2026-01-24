@@ -6,7 +6,7 @@ namespace WinEjectDisk.Src.Core.Services;
 
 public static class DiskManagementService
 {
-    private const string _getDisksCommand = "-Command \"Get-Disk | ConvertTo-Json -Depth 3\"";
+    private const string _getDisksCommand = "-Command \"ConvertTo-Json -Depth 1 -InputObject @(Get-Disk)\"";
     private const string _setIsOfflineCommand = "-Command \"Set-Disk -Number {0} -IsOffline ${1}\"";
     private const string _notSupportedErrorKeyword = "Set-Disk : Not Supported";
 
@@ -65,6 +65,7 @@ public static class DiskManagementService
 
         process.WaitForExit();
 
+        // FIXME: this should be scoped in each method
         if (process.ExitCode != 0 || !string.IsNullOrEmpty(stderr))
         {
             // FIXME: should throw custom exception
