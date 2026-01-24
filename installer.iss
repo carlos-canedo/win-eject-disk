@@ -1,15 +1,13 @@
 ; App
 #define APP_NAME "WinEjectDisk"
-#define APP_ID "{6C62EB1A-6F38-4C1F-AD79-F08F0AB09FA1}"
+#define APP_ID "6C62EB1A-6F38-4C1F-AD79-F08F0AB09FA1"
 #define APP_VERSION "1.0.0"
-#define APP_DIR ".\dist"
-
-; Output
-#define OUT_DIR ".\installer"
-#define OUT_FILENAME "WinEjectDiskSetup"
 
 ; Files
 #define EXE_NAME "WinEjectDisk.exe"
+#define APP_DIR ".\dist"
+#define OUT_DIR ".\installer"
+#define OUT_FILENAME "WinEjectDiskSetup"
 
 [Setup]
 AppName={#APP_NAME}
@@ -28,7 +26,7 @@ SolidCompression=yes
 PrivilegesRequired=admin
 
 [Files]
-Source: "{#APP_DIR}\{#PATH_EXE}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#APP_DIR}\{#EXE_NAME}"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 ; Start menu shorcuts
