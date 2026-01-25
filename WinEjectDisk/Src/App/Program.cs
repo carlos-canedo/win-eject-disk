@@ -27,3 +27,5 @@ static class Program
         Logger.Log("finished");
     }
 }
+
+// FIXME: the tray icon looks pixelated in the windows search preview - Need to find a way to improve that

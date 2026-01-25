@@ -3,6 +3,7 @@ using WinEjectDisk.Src.App.Services;
 using WinEjectDisk.Src.Core.Commands.Disk;
 using WinEjectDisk.Src.Core.Domain.Commands.Disk;
 using WinEjectDisk.Src.Core.Domain.Dtos;
+using WinEjectDisk.Src.Core.Domain.Exceptions;
 using WinEjectDisk.Src.Core.Services;
 
 namespace WinEjectDisk.Src.App.Controllers;
@@ -55,6 +56,13 @@ public sealed class DiskActionController : IDiskActionController
             _dialogService.ShowInfo(title: title, message: message);
 
             // FIXME: Need to rebuild the menu but not from here because it will cause a circular dependency
+        }
+        catch (DiskException exception)
+        {
+            Logger.Log($"{action} finished with error: ${exception}");
+
+            string title = "We couldn't disable your disk";
+            _dialogService.ShowError(title: title, message: exception.Message);
         }
         catch (Exception exception)
         {

@@ -1,4 +1,5 @@
 using WinEjectDisk.Src.Core.Domain.Commands.Disk;
+using WinEjectDisk.Src.Core.Domain.Exceptions;
 using WinEjectDisk.Src.Core.Services;
 
 namespace WinEjectDisk.Src.Core.Commands.Disk;
@@ -13,8 +14,7 @@ public sealed class SetOfflineConsumer : IDiskConsumer
 
         if (diskHashCode != pendingDisk.GetHashCode())
         {
-            // FIXME: update text
-            throw new Exception("The disk does not coincide, pls refresh and try again");
+            throw new DiskMismatchException();
         }
 
         DiskManagementService.SetIsOffline(diskNumber, isOffline: true);
