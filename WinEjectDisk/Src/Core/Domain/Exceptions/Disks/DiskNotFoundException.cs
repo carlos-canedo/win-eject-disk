@@ -4,8 +4,11 @@ namespace WinEjectDisk.Src.Core.Domain.Exceptions;
 
 public class DiskNotFoundException : DiskException
 {
-    private static readonly string[] ErrorKeywords = ["Set-Disk : Not Supported"];
     private const string DefaultMessage = "The system could not find the specified disk. It may have been disconnected.";
+    private static readonly string[] ErrorKeywords = [
+        "Get-Disk : No MSFT_Disk objects found",
+        "Set-Disk : The requested object could not be found"
+    ];
 
     public DiskNotFoundException()
         : base(DefaultMessage) { }
