@@ -91,6 +91,3 @@ internal sealed class TrayController : ITrayController, IDisposable
         Application.Exit();
     }
 }
-
-// FIXME: clean up the project
-// FIXME: add error handling - add success and error notifications - should be interesting to add custom errors

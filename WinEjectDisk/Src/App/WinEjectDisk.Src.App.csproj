@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <AssemblyName>WinEjectDisk</AssemblyName>
+    <RootNamespace>WinEjectDisk.Src.App</RootNamespace> 
+  </PropertyGroup>
+
+  <PropertyGroup>
     <ApplicationIcon>Assets\TrayIcon.ico</ApplicationIcon>
   </PropertyGroup>
 

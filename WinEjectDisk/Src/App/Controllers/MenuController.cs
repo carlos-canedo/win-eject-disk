@@ -76,7 +76,7 @@ public sealed class MenuController : IMenuController
 
         foreach (var action in disk.Actions)
         {
-            // FIXME: action labels should not come in from core
+            // FIXME: action labels should not come from core
             item.DropDownItems.Add(action.Label, null, (_, _) =>
             {
                 _diskActionController.ExecuteAction(disk, action.Command);

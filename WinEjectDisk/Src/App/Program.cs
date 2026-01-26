@@ -27,3 +27,5 @@ static class Program
         Logger.Log("finished");
     }
 }
+
+// FIXME: should be good to move the whole WinEjectDisk as root of this repo, although idk if that's ok. We need to reduce the amount of root folders like dist/install, etc.
