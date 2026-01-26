@@ -1,3 +1,5 @@
+; FIXME: Variables should come from the outer layer, at the moment from `release-build.ps1`
+
 ; App
 #define APP_NAME "WinEjectDisk"
 #define APP_ID "6C62EB1A-6F38-4C1F-AD79-F08F0AB09FA1"
@@ -5,8 +7,8 @@
 
 ; Files
 #define EXE_NAME "WinEjectDisk.exe"
-#define APP_DIR ".\dist"
-#define OUT_DIR ".\installer"
+#define APP_DIR ".\dist\app"
+#define OUT_DIR ".\dist"
 #define OUT_FILENAME "WinEjectDiskSetup"
 
 [Setup]
@@ -24,9 +26,12 @@ Compression=lzma
 SolidCompression=yes
 ; OS
 PrivilegesRequired=admin
+; Close applications
+CloseApplicationsFilter={#EXE_NAME}
+CloseApplications=yes
 
 [Files]
-Source: "{#APP_DIR}\{#EXE_NAME}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#APP_DIR}\{#EXE_NAME}"; DestDir: "{app}"; DestName: "{#EXE_NAME}"; Flags: ignoreversion
 
 [Icons]
 ; Start menu shorcuts
@@ -48,3 +53,5 @@ Filename: "schtasks"; \
 Filename: "schtasks"; \
   Parameters: "/Delete /TN ""{#APP_NAME}Task"" /F"; \
   Flags: runhidden; RunOnceId: "RemoveAdminStartupTask"
+
+; FIXME: Update installer icon
