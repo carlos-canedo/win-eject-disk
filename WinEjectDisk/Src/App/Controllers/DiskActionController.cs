@@ -51,7 +51,7 @@ public sealed class DiskActionController : IDiskActionController
             Logger.Log($"{action} finished");
 
             string title = $"Disk {action} successfully";
-            string message = $"Your disk has been ${action}, you can eject it now";
+            string message = $"Your disk has been {action}";
 
             _dialogService.ShowInfo(title: title, message: message);
 

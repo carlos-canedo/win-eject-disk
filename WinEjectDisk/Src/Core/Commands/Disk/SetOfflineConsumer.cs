@@ -18,5 +18,6 @@ public sealed class SetOfflineConsumer : IDiskConsumer
         }
 
         DiskManagementService.SetIsOffline(diskNumber, isOffline: true);
+        Logger.Log("Finished set isOffline to true");
     }
 }

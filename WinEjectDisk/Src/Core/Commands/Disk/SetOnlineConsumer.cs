@@ -18,5 +18,8 @@ public sealed class SetOnlineConsumer : IDiskConsumer
         }
 
         DiskManagementService.SetIsOffline(diskNumber, isOffline: false);
+        Logger.Log("Finished set isOffline to false");
+        DiskManagementService.SetIsReadOnly(diskNumber, isReadOnly: false);
+        Logger.Log("Finished set isReadOnly to false");
     }
 }
